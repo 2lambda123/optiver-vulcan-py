@@ -1,6 +1,6 @@
 from __future__ import annotations
 import distutils.core
-from dataclasses import dataclass
+from dataclasses import field, dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Tuple, Union, cast
 
@@ -79,8 +79,8 @@ class Vulcan:
         lockfile = source_path / config.get("lockfile", "vulcan.lock")
 
         no_lock = config.get("no-lock", False)
-        install_requires: Optional[List[str]] = []
-        extras_require: Optional[Dict[str, List[str]]] = {}
+        install_requires: Optional[List[str]] = field(default_factory=list)
+        extras_require: Optional[Dict[str, List[str]]] = field(default_factory=dict)
         if not no_lock:
             try:
                 install_requires, extras_require = get_requires(lockfile)
